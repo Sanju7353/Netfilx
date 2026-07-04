@@ -376,6 +376,37 @@ def _slug(text: str) -> str:
 # --------------------------------------------------------------------------- #
 #  Routes                                                                     #
 # --------------------------------------------------------------------------- #
+def _og(request: Request) -> dict:
+    """Absolute link-preview data (works behind Render's HTTPS proxy)."""
+    proto = request.headers.get("x-forwarded-proto", request.url.scheme)
+    host = request.headers.get("host", request.url.netloc)
+    base = f"{proto}://{host}"
+    return {
+        "title": f"My Favorite Person, {CONFIG['partner_name']}",
+        "desc": "A private love story — made just for you. 💌",
+        "image": f"{base}/static/preview.png",
+        "url": f"{base}/",
+    }
+
+
+@app.get("/manifest.webmanifest")
+async def manifest():
+    """Home-screen install name/icon (Android 'Add to Home screen')."""
+    return JSONResponse({
+        "name": f"My Favorite Person, {CONFIG['partner_name']}",
+        "short_name": CONFIG["partner_name"],
+        "start_url": "/",
+        "display": "standalone",
+        "background_color": "#141414",
+        "theme_color": "#141414",
+        "icons": [
+            {"src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png"},
+            {"src": "/static/icon-512.png", "sizes": "512x512", "type": "image/png",
+             "purpose": "any maskable"},
+        ],
+    }, media_type="application/manifest+json")
+
+
 @app.get("/")
 async def home(request: Request):
     # Locked? Show the romantic unlock screen instead of the app.
@@ -384,7 +415,8 @@ async def home(request: Request):
             "lock.html",
             {"request": request,
              "hint": CONFIG.get("lock_hint", ""),
-             "partner": CONFIG["partner_name"]},
+             "partner": CONFIG["partner_name"],
+             "og": _og(request)},
         )
     images = discover_images()
     client_config = {
@@ -394,7 +426,7 @@ async def home(request: Request):
         "imageCount": len(images),
     }
     return templates.TemplateResponse(
-        "index.html", {"request": request, "config": client_config}
+        "index.html", {"request": request, "config": client_config, "og": _og(request)}
     )
 
 

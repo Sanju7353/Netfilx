@@ -4,8 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#141414" />
-  <title>My Favorite Person ❤️</title>
+  <title>{{ og.title }}</title>
+  <meta name="description" content="{{ og.desc }}" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>" />
+  <link rel="apple-touch-icon" href="/static/icon-192.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-title" content="{{ og.title }}" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- Link preview (WhatsApp / Instagram / SMS) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="My Favorite Person" />
+  <meta property="og:title" content="{{ og.title }}" />
+  <meta property="og:description" content="{{ og.desc }}" />
+  <meta property="og:image" content="{{ og.image }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="{{ og.url }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ og.title }}" />
+  <meta name="twitter:description" content="{{ og.desc }}" />
+  <meta name="twitter:image" content="{{ og.image }}" />
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     :root{--red:#E50914;--pink:#ff5e7e;--glow:rgba(229,9,20,.55)}

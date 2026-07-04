@@ -2,8 +2,11 @@
 # 1. Push this project to a GitHub repo.
 # 2. On render.com -> New -> Blueprint -> pick the repo. Done.
 services:
+  # URL becomes https://my-favorite-person-musku.onrender.com
+  # (web addresses can't contain spaces/emoji — the pretty name shows in the
+  #  link preview + home-screen icon instead).
   - type: web
-    name: my-favorite-person
+    name: my-favorite-person-musku
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt

@@ -7,9 +7,23 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>My Favorite Person ❤️</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <title>{{ og.title }}</title>
+  <meta name="description" content="{{ og.desc }}" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>" />
+  <link rel="apple-touch-icon" href="/static/icon-192.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-title" content="{{ og.title }}" />
+  <!-- Link preview (WhatsApp / Instagram / SMS) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="My Favorite Person" />
+  <meta property="og:title" content="{{ og.title }}" />
+  <meta property="og:description" content="{{ og.desc }}" />
+  <meta property="og:image" content="{{ og.image }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="{{ og.url }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="{{ og.image }}" />
   <link rel="stylesheet" href="/static/css/style.css" />
   <script>
     window.APP_CONFIG = {{ config | tojson }};
