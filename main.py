@@ -29,7 +29,7 @@ CONFIG = {
     # Her name — shown on the lock screen, ending credits and greetings.
     "partner_name": "Musku ❤️",
     # The day you met (YYYY-MM-DD). Powers the "Days Since We Met" counter.
-    "met_date": "2023-02-14",
+    "met_date": "2026-02-07",
     # Optional background music. Drop an mp3 at static/audio/music.mp3
     # (any filename works — the app auto-detects the first audio file).
     "music_hint": "/static/audio/",
