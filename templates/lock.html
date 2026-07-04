@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#141414" />
+  <title>My Favorite Person ❤️</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    :root{--red:#E50914;--pink:#ff5e7e;--glow:rgba(229,9,20,.55)}
+    html,body{height:100%}
+    body{
+      font-family:'Segoe UI',Roboto,'Helvetica Neue',system-ui,-apple-system,sans-serif;
+      background:radial-gradient(1000px 600px at 50% 12%,#2a0a0d 0%,#0b0b0b 62%);
+      color:#f5f5f5;min-height:100dvh;display:grid;place-items:center;
+      padding:calc(24px + env(safe-area-inset-top)) 22px calc(24px + env(safe-area-inset-bottom));
+      overflow:hidden;-webkit-user-select:none;user-select:none;
+    }
+    .hearts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .hearts span{position:absolute;bottom:-40px;color:var(--red);opacity:.16;
+      animation:rise linear infinite;filter:drop-shadow(0 0 8px var(--glow))}
+    @keyframes rise{to{transform:translateY(-115vh) rotate(30deg);opacity:0}}
+
+    .brand{position:fixed;top:calc(16px + env(safe-area-inset-top));left:18px;z-index:2;
+      font-weight:800;font-size:15px;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+    .brand b{color:var(--red)}
+
+    .card{position:relative;z-index:1;width:100%;max-width:420px;text-align:center;
+      background:linear-gradient(160deg,rgba(40,20,24,.72),rgba(18,18,18,.9));
+      border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:40px 26px 30px;
+      box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 50px rgba(229,9,20,.16);
+      -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+      animation:pop .6s cubic-bezier(.22,.61,.36,1) both}
+    @keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+    .lockicon{font-size:46px;filter:drop-shadow(0 6px 18px var(--glow));animation:beat 1.6s ease-in-out infinite}
+    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+    .eyebrow{margin-top:14px;font-size:11px;letter-spacing:3px;font-weight:800;color:var(--red);text-transform:uppercase}
+    h1{margin:10px 0 6px;font-size:clamp(24px,7vw,32px);font-weight:900;line-height:1.18;text-wrap:balance}
+    h1 .name{color:var(--pink);text-shadow:0 0 24px var(--glow)}
+    .sub{color:#d9c4c8;font-size:14px;line-height:1.6;margin-bottom:24px}
+    .sub b{color:#fff}
+
+    form{display:flex;flex-direction:column;gap:12px}
+    .field{position:relative}
+    input{
+      width:100%;text-align:center;font-size:20px;font-weight:700;letter-spacing:6px;
+      padding:16px 18px;border-radius:13px;color:#fff;
+      background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.14);
+      transition:border-color .2s,box-shadow .2s;-webkit-user-select:text;user-select:text}
+    input::placeholder{letter-spacing:1px;font-weight:500;color:#8a8a8a}
+    input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 4px rgba(229,9,20,.18)}
+    button{
+      padding:15px 18px;border-radius:13px;font-size:16px;font-weight:800;color:#fff;
+      background:linear-gradient(135deg,var(--red),#8a0510);box-shadow:0 8px 24px var(--glow);
+      transition:transform .16s,filter .2s;min-height:50px}
+    button:active{transform:scale(.96)}
+    button:disabled{filter:grayscale(.4) brightness(.8)}
+    .hint{margin-top:16px;font-size:12.5px;color:#9a9a9a}
+    .hint b{color:#c9b3b6}
+    .msg{min-height:18px;margin-top:10px;font-size:13px;font-weight:700;color:var(--pink);opacity:0;transition:opacity .2s}
+    .msg.show{opacity:1}
+    .shake{animation:shake .45s}
+    @keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}
+      30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+    body.unlocked{animation:fadeout .6s forwards}
+    @keyframes fadeout{to{opacity:0}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+  <div class="brand">❤️ My Favorite <b>Person</b></div>
+
+  <main class="card" id="card">
+    <div class="lockicon">🔐</div>
+    <div class="eyebrow">Private · Members of one</div>
+    <h1>My Favorite Person,<br><span class="name">{{ partner }}</span></h1>
+    <p class="sub">Enter our secret code to come in 💌</p>
+
+    <form id="form" autocomplete="off">
+      <div class="field">
+        <input id="code" name="code" type="text" inputmode="text"
+               autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+               placeholder="Our secret code" aria-label="Secret code" />
+      </div>
+      <button id="btn" type="submit">Unlock ❤️</button>
+      <div class="msg" id="msg" aria-live="polite"></div>
+    </form>
+
+    {% if hint %}<div class="hint">Hint: <b>{{ hint }}</b></div>{% endif %}
+  </main>
+
+  <script>
+    // floating hearts
+    (function () {
+      const wrap = document.getElementById('hearts'), chars = ['❤', '💗', '💕'];
+      for (let i = 0; i < 14; i++) {
+        const s = document.createElement('span');
+        s.textContent = chars[i % chars.length];
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.fontSize = (14 + Math.random() * 26) + 'px';
+        s.style.animationDuration = (7 + Math.random() * 9) + 's';
+        s.style.animationDelay = (Math.random() * 8) + 's';
+        wrap.appendChild(s);
+      }
+    })();
+
+    const form = document.getElementById('form');
+    const input = document.getElementById('code');
+    const btn = document.getElementById('btn');
+    const card = document.getElementById('card');
+    const msg = document.getElementById('msg');
+    setTimeout(() => input.focus(), 400);
+
+    function fail() {
+      card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+      msg.textContent = "That's not our code 💔 try again";
+      msg.classList.add('show'); input.select();
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = input.value.trim();
+      if (!code) return input.focus();
+      btn.disabled = true; msg.classList.remove('show');
+      try {
+        const r = await fetch('/unlock', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+        if (r.ok) {
+          msg.textContent = 'Welcome home ❤️'; msg.classList.add('show');
+          document.body.classList.add('unlocked');
+          setTimeout(() => location.replace('/'), 650);
+          return;
+        }
+        fail();
+      } catch (_) { fail(); }
+      btn.disabled = false;
+    });
+  </script>
+</body>
+</html>

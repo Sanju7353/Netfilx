@@ -1,0 +1,13 @@
+# One-click deploy config for Render.com (free tier).
+# 1. Push this project to a GitHub repo.
+# 2. On render.com -> New -> Blueprint -> pick the repo. Done.
+services:
+  - type: web
+    name: my-favorite-person
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10

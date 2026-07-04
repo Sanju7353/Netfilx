@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#141414" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>My Favorite Person ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script>
+    window.APP_CONFIG = {{ config | tojson }};
+  </script>
+</head>
+<body>
+
+  <!-- ░░░ LOADING SCREEN (Netflix-style) ░░░ -->
+  <div id="loader" class="loader">
+    <div class="loader-brand">
+      <span class="loader-letter">M</span>
+      <span class="loader-word">Y&nbsp;FAVORITE&nbsp;PERSON</span>
+    </div>
+    <div class="loader-bar"><span></span></div>
+    <div class="loader-tag">A love story in every frame ❤️</div>
+  </div>
+
+  <!-- ░░░ AMBIENT CANVASES ░░░ -->
+  <canvas id="particles" class="fx-canvas"></canvas>
+  <canvas id="snow" class="fx-canvas" style="display:none"></canvas>
+  <canvas id="celebrate" class="fx-canvas fx-top"></canvas>
+  <div id="heartCursor" class="heart-cursor">❤</div>
+
+  <!-- ░░░ NAVBAR ░░░ -->
+  <header id="navbar" class="navbar">
+    <div class="nav-left">
+      <a class="brand" href="#top">❤️ My Favorite Person</a>
+    </div>
+    <nav class="nav-right" id="navLinks">
+      <a href="#memories" data-nav>Our Memories</a>
+      <a href="#gallery" data-nav>Love Gallery</a>
+      <a href="#" data-action="message">Special Message</a>
+      <a href="#" data-action="secret" class="nav-accent">Forever ❤️</a>
+    </nav>
+    <div class="nav-tools">
+      <button id="musicBtn" class="icon-btn" title="Music" aria-label="Toggle music">🎵</button>
+      <button id="snowBtn" class="icon-btn" title="Snow" aria-label="Toggle snow">❄️</button>
+      <button id="menuBtn" class="icon-btn menu-only" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ░░░ HERO ░░░ -->
+  <section id="top" class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">❤️ ORIGINAL SERIES · LIFETIME PREMIUM</div>
+      <h1 class="hero-title" id="heroTitle">Only One Person Has Unlimited Access To My Heart ❤️</h1>
+      <p class="hero-sub">No subscription needed. Lifetime Premium Member.</p>
+      <div class="hero-meta">
+        <span class="match">99% Match</span>
+        <span class="badge-hd">HD</span>
+        <span>2023 – Forever</span>
+        <span class="rating-inline">★★★★★</span>
+      </div>
+      <div class="hero-btns">
+        <button class="btn btn-play" data-action="continue">▶ Continue Watching</button>
+        <button class="btn btn-list" data-action="mylist">❤️ My List</button>
+      </div>
+      <div class="hero-quote" id="heroQuote"></div>
+    </div>
+    <div class="hero-fade"></div>
+  </section>
+
+  <!-- ░░░ COUNTDOWN STRIP ░░░ -->
+  <section class="counter-strip">
+    <div class="counter-box">
+      <span class="counter-num" id="daysCounter">0</span>
+      <span class="counter-label">Days Since We Met</span>
+    </div>
+    <div class="counter-box">
+      <span class="counter-num">∞</span>
+      <span class="counter-label">Days To Go</span>
+    </div>
+    <div class="counter-box">
+      <span class="counter-num">999999%</span>
+      <span class="counter-label">Love Level</span>
+    </div>
+  </section>
+
+  <!-- ░░░ MOVIE ROWS (injected) ░░░ -->
+  <main id="rows" class="rows"></main>
+
+  <!-- ░░░ LOVE METER ░░░ -->
+  <section class="love-meter">
+    <h2 class="section-h">Love Meter</h2>
+    <div class="meter-shell">
+      <div class="meter-fill" id="meterFill"></div>
+      <div class="meter-heart">❤️</div>
+    </div>
+    <div class="meter-stats">
+      <div><span class="ms-num">999999%</span><span class="ms-label">Love Level</span></div>
+      <div><span class="ms-num pulse">Forever Loading…</span><span class="ms-label">Status</span></div>
+    </div>
+  </section>
+
+  <!-- ░░░ SPECIAL MESSAGE CTA ░░░ -->
+  <section class="cta-block">
+    <button class="btn btn-play big" data-action="message">💌 Read My Special Message</button>
+    <button class="btn btn-secret" data-action="secret">🎁 Open Secret Ending</button>
+  </section>
+
+  <footer class="foot">Made with ❤️ · Directed by Love · Produced by Destiny</footer>
+
+  <!-- ░░░ MOVIE DETAIL (fullscreen) ░░░ -->
+  <div id="detail" class="detail" aria-hidden="true">
+    <div class="detail-bg" id="detailBg"></div>
+    <img id="detailPortrait" class="detail-portrait" alt="" />
+    <div class="detail-scrim"></div>
+    <button class="detail-close" data-action="closeDetail" aria-label="Close">✕</button>
+    <div class="detail-inner">
+      <div class="detail-badge">❤️ MY FAVORITE PERSON ORIGINAL</div>
+      <h2 class="detail-title" id="detailTitle"></h2>
+      <div class="detail-meta">
+        <span class="match">99% Match</span>
+        <span class="rating" id="detailRating">★★★★★</span>
+        <span class="badge-hd">HD</span>
+        <span id="detailGenres" class="genres"></span>
+      </div>
+      <p class="detail-desc" id="detailDesc"></p>
+      <div class="detail-btns">
+        <button class="btn btn-play" data-action="watch">▶ Watch Memory</button>
+        <button class="btn btn-list" data-action="likeMovie">❤️ Add to My List</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░░ SLIDESHOW PLAYER ░░░ -->
+  <div id="player" class="player" aria-hidden="true">
+    <div class="player-stage" id="playerStage"></div>
+    <div class="player-vignette"></div>
+    <div class="player-top">
+      <span class="player-title" id="playerTitle"></span>
+      <button class="detail-close" data-action="closePlayer" aria-label="Close">✕</button>
+    </div>
+    <div class="player-caption" id="playerCaption"></div>
+    <div class="player-controls">
+      <button class="pc-btn" data-action="prevSlide" aria-label="Previous">⏮</button>
+      <button class="pc-btn" data-action="togglePlay" id="playPauseBtn" aria-label="Play/Pause">⏸</button>
+      <button class="pc-btn" data-action="nextSlide" aria-label="Next">⏭</button>
+      <button class="pc-btn" data-action="shuffleSlides" aria-label="Shuffle">🔀</button>
+    </div>
+    <div class="player-progress"><span id="playerProgress"></span></div>
+  </div>
+
+  <!-- ░░░ SPECIAL MESSAGE POPUP ░░░ -->
+  <div id="messageModal" class="modal" aria-hidden="true">
+    <div class="modal-card glass">
+      <button class="modal-x" data-action="closeMessage" aria-label="Close">✕</button>
+      <div class="modal-badge">💌 A Special Message For You</div>
+      <p class="typed" id="typedMessage"></p>
+      <button class="btn btn-play" data-action="secret">Yes, let's restart ❤️</button>
+    </div>
+  </div>
+
+  <!-- ░░░ ENDING CREDITS ░░░ -->
+  <div id="credits" class="credits" aria-hidden="true">
+    <button class="detail-close credits-close" data-action="closeCredits" aria-label="Close">✕</button>
+    <div class="credits-roll" id="creditsRoll">
+      <h1 class="cr-final">I'd choose you in every universe.</h1>
+      <div class="cr-block"><span class="cr-role">Starring</span><span class="cr-name" id="crStar">Her ❤️</span></div>
+      <div class="cr-block"><span class="cr-role">Supporting Actor</span><span class="cr-name">Me ❤️</span></div>
+      <div class="cr-block"><span class="cr-role">Director</span><span class="cr-name">Love</span></div>
+      <div class="cr-block"><span class="cr-role">Produced by</span><span class="cr-name">Destiny</span></div>
+      <div class="cr-block"><span class="cr-role">Special Thanks</span><span class="cr-name">Our Memories</span></div>
+      <div class="cr-soon">
+        <span class="cr-soon-label">Coming Soon…</span>
+        <span class="cr-soon-title">Our Forever ❤️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░░ TOAST ░░░ -->
+  <div id="toast" class="toast"></div>
+
+  <audio id="bgAudio" loop preload="none"></audio>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

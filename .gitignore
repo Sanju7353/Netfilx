@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Redundant original of the song (the app uses static/audio/song.mp3)
+/songs.mpeg
+
+# NOTE: photos/, static/, and the song in static/audio/ are intentionally NOT
+# ignored — they must be committed so they ship with the deployment.
